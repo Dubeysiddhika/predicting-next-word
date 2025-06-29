@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Next Word Predictor</title>
+</head>
+<body>
+  <h2>Text Generator</h2>
+  <input type="text" id="seed" placeholder="Enter a sentence">
+  <button onclick="generate()">Predict</button>
+  <p id="output"></p>
+
+  <script>
+    async function generate() {
+      const seed = document.getElementById("seed").value;
+      const res = await fetch("http://127.0.0.1:5000/predict", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ seed })
+      });
+      const data = await res.json();
+      document.getElementById("output").innerText = "Next word: " + data.next_word;
+    }
+  </script>
+</body>
+</html>
